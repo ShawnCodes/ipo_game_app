@@ -2424,17 +2424,17 @@ data[:IPOPerformances].each do |company_hash|
 end
 
 data[:IPOPerformances].each do |company_hash|
-  Investment.create(name: Faker::Name.first_name, account_balance: 10000)
+  User.create(name: Faker::Name.first_name, account_balance: 10000)
 end
 
- Transaction.create(company_id: 1, investment_id: 1, buy: true, num_of_shares: 3)
- Transaction.create(company_id: 2, investment_id: 2, buy: true, num_of_shares: 5)
- Transaction.create(company_id: 3, investment_id: 2, buy: false, num_of_shares: 6)
- Transaction.create(company_id: 4, investment_id: 2, buy: true, num_of_shares: 1)
- Transaction.create(company_id: 1, investment_id: 5, buy: true, num_of_shares: 1)
- Transaction.create(company_id: 1, investment_id: 7, buy: true, num_of_shares: 1)
- Transaction.create(company_id: 2, investment_id: 9, buy: true, num_of_shares: 2)
- Transaction.create(company_id: 1, investment_id: 11, buy: true, num_of_shares: 3)
+ Transaction.create(company_id: 1, user_id: 1, buy: true, num_of_shares: 3)
+ Transaction.create(company_id: 2, user_id: 2, buy: true, num_of_shares: 5)
+ Transaction.create(company_id: 3, user_id: 2, buy: false, num_of_shares: 6)
+ Transaction.create(company_id: 4, user_id: 2, buy: true, num_of_shares: 1)
+ Transaction.create(company_id: 1, user_id: 5, buy: true, num_of_shares: 1)
+ Transaction.create(company_id: 1, user_id: 7, buy: true, num_of_shares: 1)
+ Transaction.create(company_id: 2, user_id: 9, buy: true, num_of_shares: 2)
+ Transaction.create(company_id: 1, user_id: 11, buy: true, num_of_shares: 3)
   # binding.pry
 
 # company_names = data[:IPOPerformances].map { |company| company[:Name] }

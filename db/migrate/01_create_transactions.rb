@@ -3,7 +3,7 @@ class CreateTransactions < ActiveRecord::Migration[5.1]
   def change
     create_table :transactions do |t|
       t.integer :company_id
-      t.integer :investment_id
+      t.integer :user_id
       t.boolean :buy
     end
   end

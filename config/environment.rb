@@ -1,14 +1,17 @@
 # Load the Rails application.
 # require 'application'
-require 'pry'
-require 'tty'
+require 'bundler/setup'
+Bundler.require
+require_all 'app'
 # Initialize the Rails application.
 
-# Rails.application.initialize!
-
+Rails.application.initialize!
 
   def welcome
     puts "Welcome!  This is an IPO investment game."
+    puts "Please enter your name:"
+    name = gets.chomp
+    User.create(name: name, account_balance: 100)
   end
 
   def get_company
@@ -16,6 +19,10 @@ require 'tty'
     # prompt.select("Choose a company to invest in:", Company.all_names)
     puts "Choose a company to invest in:"
     @company = gets.chomp
+    until Company.all_names.include?(@company)
+      puts "Invalid company.  Please choose again."
+      @company = gets.chomp
+    end
   end
 
    def get_share_amount
@@ -24,8 +31,13 @@ require 'tty'
     @shares = gets.chomp
    end
 
+   def make_transaction
+     company = Company.find_by(name: @company)
+     Transaction.new(company_id: company.id, user_id: self.id, num_of_shares: @shares, buy: true)
+   end
+
    def change_balance
-     new_balance = self.account_balance - (@shares * Company.find_by_name(@company).open_price)
+     new_balance = self.account_balance - (@shares * Company.find_by(name: @company).open_price)
    end
   # Investment class
   def display_balance
@@ -34,7 +46,8 @@ require 'tty'
 
   # Need to order by open_price but not getting correct number for query
   def investments_complete
-    if self.account_balance < 5
+    if self.account_balance < lowest_open_price
+      puts "Your account is empty #{self.name}. Here's how you did!"
     end
   end
 
@@ -62,18 +75,12 @@ require 'tty'
   # thurman.initial_purchase
   # thurman.return_on_capital
 
-  def set_investments
-    Investment.all.map do |investment|
-      investment.name.downcase = investment
-    end
-  end
-
   def lowest_open_price
     hsh = {}
     Company.all.each do |el|
       hsh[el.open_price.to_f] = el
     end
-    hsh.min_by {|k,v| k}
+    hsh.min_by {|k,v| k}[0]
   end
 
 
@@ -100,17 +107,3 @@ require 'tty'
   # def get_company
   #   @company_name = prompt.select("Choose a company to invest in:", Company.all_names)
   # end
-
-  def run
-    welcome
-    display_balance
-    get_company
-    get_share_amount
-    change_balance
-    display_balance
-    display_portfolio
-  end
-
-  thurman = Investment.create("Thurman", 1000) 
-
-  thurman.run
