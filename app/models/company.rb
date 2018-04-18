@@ -5,5 +5,4 @@ class Company < ActiveRecord::Base
   def self.all_names
     self.all.map {|company| company.name}
   end
-
 end

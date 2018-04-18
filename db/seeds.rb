@@ -2423,7 +2423,18 @@ data[:IPOPerformances].each do |company_hash|
   Company.create(name: company_hash[:Name], open_price: company_hash[:OfferPrice].to_s, close_price: company_hash[:ClosePrice].to_s)
 end
 
-Transaction.create(company_id: 11, num_of_shares: 10, buy: true)
+data[:IPOPerformances].each do |company_hash|
+  Investment.create(name: Faker::Name.first_name, account_balance: 10000)
+end
+
+ Transaction.create(company_id: 1, investment_id: 1, buy: true, num_of_shares: 3)
+ Transaction.create(company_id: 2, investment_id: 2, buy: true, num_of_shares: 5)
+ Transaction.create(company_id: 3, investment_id: 2, buy: false, num_of_shares: 6)
+ Transaction.create(company_id: 4, investment_id: 2, buy: true, num_of_shares: 1)
+ Transaction.create(company_id: 1, investment_id: 5, buy: true, num_of_shares: 1)
+ Transaction.create(company_id: 1, investment_id: 7, buy: true, num_of_shares: 1)
+ Transaction.create(company_id: 2, investment_id: 9, buy: true, num_of_shares: 2)
+ Transaction.create(company_id: 1, investment_id: 11, buy: true, num_of_shares: 3)
   # binding.pry
 
 # company_names = data[:IPOPerformances].map { |company| company[:Name] }

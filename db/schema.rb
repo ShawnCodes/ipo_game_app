@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 4) do
 
   create_table "transactions", force: :cascade do |t|
     t.integer "company_id"
+    t.integer "investment_id"
     t.boolean "buy"
     t.integer "num_of_shares"
   end

@@ -1,8 +1,7 @@
 # Load the Rails application.
-require_relative 'application'
+require 'ipo_game_app'
 
 # Initialize the Rails application.
-
 Rails.application.initialize!
 
 
@@ -17,16 +16,16 @@ Rails.application.initialize!
   # share instance
   # how do we select the share price of the given company?
   # Use API
-  def get_share_price(name_of_company)
-    data[IPOPerformances].map { |e|  }
-  end
-
-  def get_share_amount
-    prompt.slider("Shares:", max: 50, step: 1)
-  end
-
-  #User class
-  def display_balance_and_portfolio
-    puts self.acct_balance
-    puts self.portfolio
-  end
+  # def get_share_price(name_of_company)
+  #   data[IPOPerformances].map { |e|  }
+  # end
+  #
+  # def get_share_amount
+  #   prompt.slider("Shares:", max: 50, step: 1)
+  # end
+  #
+  # #User class
+  # def display_balance_and_portfolio
+  #   puts self.acct_balance
+  #   puts self.portfolio
+  # end
