@@ -1,1 +1,3 @@
-require "all"
+require "./all"
+
+welcome

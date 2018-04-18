@@ -1,8 +1,10 @@
 # Load the Rails application.
 # require 'application'
 require 'pry'
+require 'tty'
 # Initialize the Rails application.
-Rails.application.initialize!
+
+# Rails.application.initialize!
 
 
   def welcome
@@ -10,25 +12,31 @@ Rails.application.initialize!
   end
 
   def get_company
-    @company_name = prompt.select("Choose a company to invest in:", Company.all_names)
+    # @company_name =
+    # prompt.select("Choose a company to invest in:", Company.all_names)
+    puts "Choose a company to invest in:"
+    @company = gets.chomp
   end
 
    def get_share_amount
-    @shares_select = prompt.slider("Shares:", max: 50, step: 1)
+    # @shares_select = prompt.slider("Shares:", max: 50, step: 1)
+    "Select share amount:"
+    @shares = gets.chomp
    end
 
    def change_balance
-     new_balance = self.account_balance - (@shares_select * Company.find_by_name(@company_name).open_price)
+     new_balance = self.account_balance - (@shares * Company.find_by_name(@company).open_price)
    end
   # Investment class
   def display_balance
-    self.account_balance
+    puts "Your current balance is #{self.account_balance}"
   end
 
   # Need to order by open_price but not getting correct number for query
   def investments_complete
     if self.account_balance < 5
     end
+  end
 
   # Investments
   def final_sale
@@ -50,9 +58,23 @@ Rails.application.initialize!
     result.round(2)
   end
 
-  thurman.final_sale
-  thurman.initial_purchase
-  thurman.return_on_capital
+  # thurman.final_sale
+  # thurman.initial_purchase
+  # thurman.return_on_capital
+
+  def set_investments
+    Investment.all.map do |investment|
+      investment.name.downcase = investment
+    end
+  end
+
+  def lowest_open_price
+    hsh = {}
+    Company.all.each do |el|
+      hsh[el.open_price.to_f] = el
+    end
+    hsh.min_by {|k,v| k}
+  end
 
 
 
@@ -70,31 +92,25 @@ Rails.application.initialize!
     end
   end
 
-  thurman.display_portfolio
-
-def view_all_companies?
-  second_prompt = prompt.yes?("Would you like to view all available companies?") do ||
-end
-
-  def get_company
-    @company_name = prompt.select("Choose a company to invest in:", Company.all_names)
+  def view_all_companies?
+    second_prompt = prompt.yes?("Would you like to view all available companies?") do ||
+    end
   end
 
-
-
-
-
-  # share instance
-  # how do we select the share price of the given company?
-  # Use API
-  # def get_share_price(name_of_company)
-  #   data[IPOPerformances].map { |e|  }
+  # def get_company
+  #   @company_name = prompt.select("Choose a company to invest in:", Company.all_names)
   # end
-  #
 
-  #
-  # #User class
-  # def display_balance_and_portfolio
-  #   puts self.acct_balance
-  #   puts self.portfolio
-  # end
+  def run
+    welcome
+    display_balance
+    get_company
+    get_share_amount
+    change_balance
+    display_balance
+    display_portfolio
+  end
+
+  thurman = Investment.create("Thurman", 1000) 
+
+  thurman.run
