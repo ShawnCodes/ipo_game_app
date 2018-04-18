@@ -1,5 +1,5 @@
 # Load the Rails application.
-require 'ipo_game_app'
+# require 'application'
 
 # Initialize the Rails application.
 Rails.application.initialize!
